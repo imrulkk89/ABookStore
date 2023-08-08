@@ -1,0 +1,152 @@
+@layout('layouts.main')
+
+@section('main')
+  <section class="contentBody mt-4 clearfix" id="contentBody">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+
+                <div class="col">
+                  <h2>Sub-Category</h2>
+                </div><!-- end of col -->
+
+              </div><!-- end of row -->
+            </div><!-- end of card-header -->
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="">
+                        <form class="row addNewBookForm align-items-center" action="/admin/stage" method="POST" enctype="multipart/form-data">
+                            {{ csrfField() }}
+                              <div class="col-sm-4">
+                                <div class="form-group">
+                                  <label for="category-name">Categories</label>
+                                    <select name="category_id" class="form-control" id="category-name">
+                                        @each(category in categories)
+                                          <option value={{category.id}}>{{category.category}}</option>
+                                        @endeach
+                                    </select>
+                                </div><!-- end of form-group -->
+                              </div><!-- end of col -->
+
+                              <div class="col-sm-4">
+                                <div class="form-group">
+                                  <label for="stage-name">Stage Name</label>
+                                  <input type="text" name="stage" class="form-control" id="stage-name" placeholder="Stage" />
+                                </div><!-- end of form-group -->
+                              </div><!-- end of col -->
+
+                              <div class="col">
+                                <div class="form-group editBtnSettings ">
+                                  <ul class="editBtnList d-flex justify-content-end">
+                                    <li><input type="submit" id="delete-stage" class="btn btn-primary" value="Add New Stage" /></li> <!--  <button type="submit" id="add-sub-category" class="btn btn-primary">Add New Sub-Category</button>  -->
+                                    <li><button class="btn btn-secondary">Cancel</button></li>
+                                  </ul>
+                                </div><!-- end of editBtnSettings -->
+                              </div><!-- end of col -->
+
+                        </form>
+                    </div><!-- end of row -->
+                  </div><!-- end of col -->
+                </div><!-- end of row -->
+            </div><!-- end of card-body -->
+
+            <div class="card-body">
+              <div class="row">
+                  <div class="col-sm-12">
+                    <form action="" method="POST" >
+                        {{ csrfField() }}
+                      <div class="row">
+                        <div class="col">
+                          <form class="actionForm">
+                            <div class="row">
+                              <div class="col-auto pr-1">
+                                <div class="d-flex form-group actionGroup">
+                                  <select class="form-control">
+                                    <option>Actions</option>
+                                    <option>Move to Trash</option>
+                                  </select>
+                                  <button class="btn btn-secondary actionBtn ml-2">Apply</button>
+                                </div><!-- end of form-group -->
+                              </div><!-- end of col -->
+
+                              <div class="col">
+                                <nav class="actionNav" aria-label="Page navigation">
+                                  <ul class="pagination flex-row justify-content-end align-items-center">
+                                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+                                    <li class="page-item"><input class="form-control" type="text" value="1" /></li>
+                                    <li class="page-item"><span class="numOf">of 2</span></li>
+                                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
+                                  </ul><!-- end of pagination -->
+                                </nav><!-- end of actionNav -->
+                              </div><!-- end of col -->
+
+                            </div><!-- end of row -->
+
+                          </form><!-- end of form -->
+                        </div><!-- end of col -->
+                      </div><!-- end of row -->
+
+                      <div class="table-responsive" id="cv_db_table_area">
+                        <table class="table align-items-center table-flush" id="cv_db_table_income_summary">
+                          <thead class="thead-light">
+                            <tr>
+                              <th class="checkColumn" scope="col">
+                                  <div class="form-check formCheckbox">
+                                  <input class="form-check-input" type="checkbox" value="" id="check1" />
+                                  <label class="form-check-label" for="check1"></label>
+                                </div><!-- end of formCheckbox -->
+                              </th>
+                              <th scope="col" class="catName">Categorie Name</th>
+                              <th scope="col" class="catDescription">Stage</th>
+                              <th scope="col" class="actionBtnGroup">Action</th>
+                            </tr>
+                          </thead><!-- end of thead -->
+
+                          <tbody>
+                            @each(stage in stages)
+                              <tr>
+                                  <td class="checkColumn">
+                                    <div class="form-check formCheckbox">
+                                      <input class="form-check-input" type="checkbox" value="" id="check1" />
+                                      <label class="form-check-label" for="check1"></label>
+                                    </div><!-- end of formCheckbox -->
+                                  </td><!-- end of td -->
+                                <td><a href="#">{{stage.category.category}} </a></td>
+                                  <td>{{stage.stage}}</td>
+                                  <td>
+                                    <div class="actionBtn d-flex justify-content-around">
+                                    <a href="{{route('/stage.edit',{id:stage.id})}}" class="btn btn-secondary"><i class="far fa-edit"></i></a>
+                                      @if(auth.user.user_type=== 'SUPER_ADMIN' || auth.user.user_type==='ADMIN')
+                                          <form action="" method="POST">
+                                            {{ csrfField() }}
+                                          <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                                        </form>
+                                      @endif
+                                    </div><!-- end of actionBtn -->
+                                  </td><!-- end of td -->
+                                </tr><!-- end of tr -->
+                            @endeach
+
+
+                          </tbody><!-- end of tbody -->
+                        </table><!-- end of table -->
+                      </div><!-- end cv_db_table_area -->
+
+                    </form><!-- end of -->
+                  </div><!-- end of col8 -->
+              </div><!-- end of row -->
+            </div><!-- end of card-body -->
+          </div><!-- end of card -->
+
+        </div><!-- end of col -->
+      </div><!-- end of row -->
+    </div><!-- end of container -->
+  </section><!-- end of contentBody -->
+@endsection

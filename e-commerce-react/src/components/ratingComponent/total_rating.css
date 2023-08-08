@@ -1,0 +1,22 @@
+.rating {
+  line-height: 1;
+  display: inline-block;
+}
+.rating_item {
+  display: inline;
+  font-size: 0;
+}
+.rating_item::before {
+  font-size: 18px;
+  content: "★";
+  color: lightgray;
+}
+
+.rating_input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.rating_item--selected::before {
+  color: orange;
+}

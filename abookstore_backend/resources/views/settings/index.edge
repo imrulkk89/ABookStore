@@ -1,0 +1,109 @@
+@layout('layouts.main')
+@section('main')
+<section class="cv_db_status_sec clearfix p-3 cv_db_blackwi_bg_gradient" id="status_sec">
+    <div class="container-fluid cv_db_full_height">
+      <div class="row">
+        <div class="col">
+          <div class="cv_db_pageinfo">
+            <h1 class="cv_db_pageinfo_title cv_db_text_white">Estates and Shipment</h1>
+          </div><!-- end of cv_db_pageinfo -->
+        </div><!-- end of col -->
+      </div><!-- end of row -->
+    </div><!-- end of container-fluid -->
+  </section>
+  <section class="cv_db_setup_general clearfix mt-5" id="setup_general">
+      @if(flashMessage('notification_success'))
+          <div class="row">
+              <div class="col-md-12">
+                <div class="alert alert-success notification">{{flashMessage('notification_success')}}</div>
+              </div>
+          </div>
+        @elseif(flashMessage('notification_failure'))
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger notification">{{flashMessage('notification_failure')}}</div>
+                </div>
+            </div>
+        @else
+      @endif
+    <div class="container-fluid">
+      <div class=" card shadow p-2 m-1 mb-3">
+        <h3>Insert Estate</h3>
+        <hr><br>
+        <form action="/admin/delivery/create" method="post">
+          {{ csrfField() }}
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="estate">Estate Name</label>
+                <input name="estate" type="text" class="form-control" id="estate" placeholder="Estate">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="dt">Delivary Time</label>
+                <input name="delivery_time" type="number" class="form-control" id="dt" placeholder="Delivary Time">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="sf">Shipment Fee</label>
+                <input name="delivery_fee" type="number" class="form-control" id="sf" placeholder="Fee">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <br>
+                <br>
+               <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="cv_db_setup_card card shadow border-0">
+            <div class="table-responsive" id="cv_db_table_area">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col"><a href="#">SL</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">ESTATE</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">DELEVERY TIME</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">DELEIVERY CHARGE</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead><!-- end of thead -->
+
+                <tbody>
+                  @each(deliveryMethod in deliveryMethods)
+                    <tr>
+                      
+                        <td>{{deliveryMethod.id}}</td>
+                        <td>{{deliveryMethod.delivery_name}}</td>
+                        <td>{{deliveryMethod.delivery_time}} days</td>
+                        <td>${{deliveryMethod.price}}</td>
+                  
+                        <td class="text-right">
+                        <a class="btn btn-secondary" href="/admin/delivery/{{deliveryMethod.id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit" data-original-title="Edit">
+                            <span class="btn-inner--icon"><i class="fa fa-pencil-alt" aria-hidden="true"></i></span>
+                            <span class="btn-inner--text">Edit Estate</span>
+                        </a>
+                        <a onclick="return confirm('Are you sure want to delete this Estate {{deliveryMethod.delivery_name}}')" class="btn btn-danger" href="/admin/delivery/{{deliveryMethod.id}}/delete" data-toggle="tooltip" data-placement="top" title="Delete" data-original-title="Delete">
+                          <span class="btn-inner--icon"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                          <span class="btn-inner--text">Delete</span>
+                        </a>
+                        </td>
+                    </tr><!-- end of tr -->
+                  @endeach
+                </tbody><!-- end of tbody -->
+              </table><!-- end of table -->
+            </div><!-- end of cv_db_setup_card-->
+
+          </div><!-- end of card -->
+        </div><!-- end of col -->
+      </div><!-- end of row -->
+    </div><!-- end of container-fluid -->
+  </section>
+@endsection

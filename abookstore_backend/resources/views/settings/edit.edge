@@ -1,0 +1,65 @@
+@layout('layouts.main')
+
+@section('main')
+
+<section class="cv_db_setup_general clearfix mt-5" id="setup_general">
+    <div class="container-fluid">
+
+        @if(flashMessage('notification_success'))
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-success notification">{{flashMessage('notification_success')}}</div>
+                </div>
+            </div>
+          @elseif(flashMessage('notification_failure'))
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger notification">{{flashMessage('notification_failure')}}</div>
+                </div>
+            </div>
+          @else
+      @endif
+      <div class="row">
+        <div class="col">
+          <div class="cv_db_setup_card card shadow border-0">
+            <div class="cv_db_card_header">
+              <div class="row">
+                <div class="col text-right">
+                    <a href="/admin/delivery" class="btn btn-sm btn-primary"><i class="fas fa-chevron-left"></i> Back</a>
+                </div><!-- end of col -->
+              </div><!-- end of row -->
+            </div><!-- end of cv_db_card_header -->
+
+            <div class="col-sm-6">
+            <form method="POST" action="/admin/delivery/update" autocomplete="off">
+                {{ csrfField() }}
+                <input name="id" value="{{deliveryMethod.id}}" hidden/>
+                <h6 class="heading-small text-muted mt-4 mb-4">Delivery Method</h6>
+
+                <div class="form-group">
+                  <label class="form-control-label mb-2" for="delivery-metho-name">DELIVERY METHOD</label>
+                <input type="text" name="delivery_name" id="delivery-metho-name" class="form-control form-control-alternative" placeholder="Delivery Method" value="{{deliveryMethod.delivery_name}}" required="" autofocus="">
+                </div><!-- end of form-group -->
+
+                <div class="form-group">
+                  <label class="form-control-label mb-2" for="delivery-time">DELEVERY TIME</label>
+                <input type="number" name="delivery_time" id="delivery-time" class="form-control form-control-alternative" placeholder="1 day" value="{{deliveryMethod.delivery_time}}" required="" autofocus="">
+                </div><!-- end of form-group -->
+
+
+                <div class="form-group">
+                  <label class="form-control-label mb-2" for="delivery-price">DELEIVERY CHARGE</label>
+                  <input type="number" name="price" id="delivery-price" class="form-control form-control-alternative" placeholder="$ 00.00" value="{{deliveryMethod.price}}" required="">
+                </div><!-- end of form-group -->
+
+                <div class="mb-4">
+                  <input type="submit" class="btn btn-primary mt-4" value="Update" />
+                </div><!-- end of form-group -->
+              </form><!-- end of form -->
+            </div><!-- end of col6 -->
+          </div><!-- end of card -->
+        </div><!-- end of col -->
+      </div><!-- end of row -->
+    </div><!-- end of container-fluid -->
+  </section>
+@endsection

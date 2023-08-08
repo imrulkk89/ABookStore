@@ -1,0 +1,23 @@
+@layout('layouts.auth')
+@section('verify')
+<div class="card">
+    <div class="card-header text-center">
+      <div class="logoWrapper">
+        <!-- <a href="/"><img src="" alt="Logo" /></a>  -->
+        <h1><a href="#">LOGO</a></h1>
+      </div><!-- end of logoWrapper -->
+    </div><!-- end of card-header -->
+
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <label for="enterEmail">Enter Your Code</label>
+          <input type="email" class="form-control mt-3" id="enterEmail" placeholder="Enter Your Code">
+        </div><!-- end of form-group -->
+
+        <button type="submit" class="btn btn-primary">Verify Code</button>
+      </form><!-- end of form -->
+    </div><!-- end of card-body -->
+
+  </div>
+@endsection

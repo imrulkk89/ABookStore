@@ -1,0 +1,84 @@
+@layout('layouts.main')
+
+@section('main')
+<section class="cv_db_status_sec clearfix cv_db_sec_gap10 cv_db_blackwi_bg_gradient" id="status_sec">
+    <div class="container-fluid cv_db_full_height">
+      <div class="row">
+        <div class="col">
+          <div class="cv_db_pageinfo">
+            <h1 class="cv_db_pageinfo_title cv_db_text_white">Coupon List</h1>
+          </div><!-- end of cv_db_pageinfo -->
+        </div><!-- end of col -->
+      </div><!-- end of row -->
+    </div><!-- end of container-fluid -->
+  </section>
+  <section class="cv_db_setup_general clearfix mt-5" id="setup_general">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="cv_db_setup_card card shadow border-0">
+            <div class="cv_db_card_header">
+              <div class="row">
+                <div class="col-sm-4 text-center">
+                    <div class="cv_db_filter">
+                      <form action="/admin/promo-code/search" method="post" class="form-inline">
+                        {{ csrfField() }}
+                        <label class="my-1 mr-2 control-label" for="filter-input">Filter
+                          <a href="#" onclick="javascript:return false;" class="ml-1 text-primary" data-toggle="popover" title="" data-placement="top" data-html="true" data-content="<p><small>Available columns-</small></p><p><pre>country_name</pre></p><p><small>You can search the result in following format- </small></p>
+                            <p><pre>column_name:value1,value2</pre></p>
+                            <p><small>You can specify multiple values for a column</small></p>
+                            <p><small>You can enter any term without any column name then it will be searched in all the columns</small><p>" data-original-title="Filter Help"><i class="fa fa-question-circle"></i></a></label>
+                        <input style="width:68%" id="filter-input" class="form-control my-1 mr-sm-2" type="text" name="keyword" placeholder="Type your search here...">
+                        <button type="submit" class="btn btn-lg btn-primary">Filter</button>
+                      </form>
+                    </div><!-- end of -->
+                </div><!-- end of col -->
+
+                <div class="col text-right">
+                    <a href="/admin/promo-code/create" class="btn btn-sm btn-primary"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Create Promo</a>
+                </div><!-- end of col -->
+              </div><!-- end of row -->
+            </div><!-- end of cv_db_card_header -->
+
+            <div class="table-responsive" id="cv_db_table_area">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col"><a href="#">SL. No</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">Promo Code</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">Discount (%)</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">Up to</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">Valid Until</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead><!-- end of thead -->
+
+                <tbody>
+               @each(promocode in promocodes)
+                <tr>
+                <td>{{($loop.index + 1)}}</td>
+                <td>{{promocode.code}}</td>
+                <td>{{promocode.discount}}</td>
+                <td>{{promocode.upto}}</td>
+                <td>{{promocode.valid_till}}</td>
+                  <td class="text-right">
+                  <form action="/admin/promo-code/{{promocode.id}}?_method=DELETE" method="POST">
+                    {{ csrfField() }}
+                    <button class="btn btn-danger" type="submit">
+                     <span class="btn-inner--icon"><i class="far fa-trash-alt"></i></span>
+                    <span class="btn-inner--text">Remove</span>
+                    </button>
+                  </form>
+
+                  </td>
+                </tr>
+               @endeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+@endsection

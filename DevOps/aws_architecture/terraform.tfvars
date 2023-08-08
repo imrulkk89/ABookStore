@@ -1,0 +1,7 @@
+#aws_region = "eu-west-1"
+db_password = "<db_pass>"
+ec2_ami = "ami-0650124da837ece66"
+//ec2_ami = "ami-0a8e758f5e873d1c1"
+domain_name = "abookstore.co.ke"
+sub_domain_name = "admin.abookstore.co.ke"
+blog_ec2_ami = "ami-0a8e758f5e873d1c1"

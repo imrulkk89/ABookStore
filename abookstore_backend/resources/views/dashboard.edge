@@ -1,0 +1,93 @@
+@layout('layouts.main')
+
+@section('main')
+  <section class="cv_db_status_sec clearfix cv_db_sec_gap" id="status_sec">
+    <div class="container-fluid cv_db_full_height">
+      <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+          <div class="cv_db_head_title mb-2">
+            <h2>Order history</h2>
+          </div><!-- end of cv_db_head_title -->
+        </div><!-- end of col12 -->
+
+        <div class="col-xl-3 col-lg-6">
+          <div class="card cv_db_card_stats mb-4 mb-xl-0">
+            <div class="card-body cv_db_card_content">
+              <div class="row">
+                <div class="col">
+                   <h5 class="card-title text-uppercase text-muted mb-0 cv_db_txt_sm">Total active user</h5>
+                  <h5 class="card-title text-uppercase text-muted mb-0 cv_db_txt_sm"></h5>
+                  <span class="cv_db_currency font-weight-bold mb-0">{{activeUser ? activeUser : 0}} People</span>
+                </div><!-- end of col -->
+              </div><!-- end of row  -->
+            </div><!-- end of card-body -->
+          </div><!-- end of card -->
+        </div><!-- end of col3 -->
+
+        <div class="col-xl-3 col-lg-6">
+          <div class="card cv_db_card_stats mb-4 mb-xl-0">
+            <div class="card-body cv_db_card_content">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0 cv_db_txt_sm">TOTAL BOOKS</h5>
+                  <span class="cv_db_currency font-weight-bold mb-0">{{total_book? total_book : 0 }} Pieces</span>
+                </div><!-- end of col -->
+              </div><!-- end of row  -->
+
+           
+            </div><!-- end of card-body -->
+          </div><!-- end of card -->
+        </div><!-- end of col3 -->
+
+        <div class="col-xl-3 col-lg-6">
+          <div class="card cv_db_card_stats mb-4 mb-xl-0">
+            <div class="card-body cv_db_card_content">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0 cv_db_txt_sm">TOTAL ORDER</h5>
+                  <span class="cv_db_currency font-weight-bold mb-0">{{total_order ? total_order : 0}} Items</span>
+                </div><!-- end of col -->
+
+              </div><!-- end of row  -->
+
+            </div><!-- end of card-body -->
+          </div><!-- end of card -->
+        </div><!-- end of col3 -->
+
+        <div class="col-xl-3 col-lg-6">
+          <div class="card cv_db_card_stats mb-4 mb-xl-0">
+            <div class="card-body cv_db_card_content">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0 cv_db_txt_sm">total sale</h5>
+                  <span class="cv_db_currency font-weight-bold mb-0"> {{totalAmount? totalAmount : 0}} Ksh</span>
+                </div><!-- end of col -->
+              </div><!-- end of row  -->
+
+      
+            </div><!-- end of card-body -->
+          </div><!-- end of card -->
+        </div><!-- end of col3 -->
+
+       <div class="container-fluid mt-5">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title text-center">
+                      User Statistics
+                  </div>
+                </div>
+                 <div class="card-body">
+                    <canvas id="book-shop-chart"></canvas>
+                 </div>
+
+                 <div class="card-footer">
+                   <div class="text-center">2019</div>
+                 </div> 
+              </div>
+            <div>
+          <div>
+       <div>
+
+@endsection

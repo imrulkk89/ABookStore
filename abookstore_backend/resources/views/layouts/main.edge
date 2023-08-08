@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" class="cv_db_full_height">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style>
+   .errors{
+    color: red;
+  }
+</style>
+    <!-- Title CSS -->
+  <title>{{title}}</title>
+
+    <!-- Dashboard Sytle CSS -->
+    {{--  <link rel="stylesheet" href="assets/css/db_style.css">  --}}
+    {{ style('css/db_style.css') }}
+
+  </head>
+  <body class="cv_db_full_height">
+
+    <div class="allWrapper cv_db_full_height">
+
+      <!-- area of navbar -->
+      @include('layouts.navbar.navbar')
+
+      <main class="cv_db_main_content clearfix cv_db_full_height cv_db_scrollbar" id="main_content">
+
+        <!-- area of header -->
+        @include('layouts.headers.header')
+
+        @section('main')
+
+        @endsection
+
+        <!-- area of footer -->
+        @include('layouts.footers.footer')
+
+      </main><!-- end of cv_db_main_content -->
+    </div><!-- end of allWrapper -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    {{ script('js/jquery-3.4.1.min.js')}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+    {{ script('js/skin.min.js') }}
+    {{ script('js/db_style') }}
+    {{ script('js/main.js') }}
+  </body>
+</html>

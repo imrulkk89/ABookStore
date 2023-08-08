@@ -1,0 +1,227 @@
+@layout('layouts.main')
+
+@section('main')
+<main class="mainContent clearfix" id="mainContent">
+    <section class="contentBody mt-4 clearfix" id="contentBody">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+
+                  <div class="col mb-3">
+                    <h2>Order Details</h2>
+                  </div><!-- end of col -->
+                </div><!-- end of row -->
+              </div><!-- end of card-header -->
+            </div><!-- end of card -->
+          </div><!-- end of col -->
+        </div><!-- end of row -->
+
+        {{--  Order section  --}}
+        <div class="row  p-0 m-0">
+          <div class="col mt-2 p-0">
+            <div class="card">
+              <div class="card-header">
+                <p><strong>VOUCHER NO: </strong><b class="vouterId">{{order.order_code}}</b>
+                  @if(order.status==='PENDING')
+                  <a href="/admin/order-confirmation/{{order.id}}/{{'APPROVED'}}"
+                    onclick="return confirm('Are you sure to Approve this order')"
+                    class="btn btn-secondary">Approve</a>
+                  <a href="/admin/order-confirmation/{{order.id}}/{{'REJECTED'}}"
+                    onclick="return confirm('Are you sure to Reject this order')"
+                    class="btn btn-danger">Reject</a>
+                  @elseif(order.status==='APPROVED')
+                  <a href="/admin/order-confirmation/{{order.id}}/{{'DELIVERY'}}"
+                    onclick="return confirm('Are you sure to Delivary this order')"
+                    class="btn btn-secondary">Delivary</a>
+                  @elseif(order.status==='DELIVERY')
+                  <a href="/admin/order-confirmation/{{order.id}}/{{'DELIVERED'}}"
+                    onclick="return confirm('Are you sure to Delivared this order')"
+                    class="btn btn-secondary">Delivared</a>
+                  @endif
+                <a onclick="return confirm('Are you sure to make this order Reject ?')" href="/admin/order-confirmation/{{order.id}}/{{'REJECTED'}}" class="btn btn-danger float-right">Decline</a>
+                <a onclick="return confirm('Are you sure to make this order Approve')" href="/admin/order-confirmation/{{order.id}}/{{'APPROVED'}}" class="btn btn-secondary float-right mr-2">Approve</a>
+                </p>
+              </div>
+              <div class="card-header mt-1"><strong><i class="fa fa-shopping-basket"></i> Order Details</strong></div>
+              <div class="card-body">
+                <div class="table-responsive" id="cv_db_table_area">
+                  <table class="table table table-bordered ">
+                    <thead class="thead-light">
+                      <tr>
+                        <th class="text-center" >Image</th>
+                        <th class="text-center" >Title</th>
+                        <th class="text-center" >Order Date</th>
+                        <th class="text-center" >Price</th>
+                        <th class="text-center" >Quantity</th>
+                        <th class="text-center" >Total</th>
+                      </tr>
+                    </thead><!-- end of thead -->
+
+                    <tbody>
+                      @each(book in books)
+                        <tr>
+                            <td class="text-center align-middle order-image-td" ><img src="{{book.cover_images.img_1}}" alt="" id="order-image"></td>
+                            <td class="text-center align-middle" >{{(book.name) ? book.name : 'N/A'}}</td>
+                            <td class="text-center align-middle" >{{(order.created_at) ? order.created_at : 'N/A'}}</td>
+                            <td class="text-center align-middle" > &nbsp;{{(book.price) ? book.price : '0'}} KSH</td>
+                            <td class="text-center align-middle" >{{(book.quantity) ? book.quantity : '0'}} </td>
+                            <td class="text-center align-middle" > &nbsp;{{(book.quantity_price) ? book.quantity_price : '0'}} KSH</td>
+                        </tr>
+                      @endeach
+
+                    </tbody><!-- end of tbody -->
+
+                  </table><!-- end of table -->
+                  <table class="table PriceCalculateTable">
+                    <tbody>
+                      <tr>
+                        <td class="align-middle first-child-top-border"><strong>Total Quantity</strong></td>
+                        <td class="text-center align-middle first-child-top-border"><strong>{{(order.total_books) ? order.total_books : '0'}} </strong></td>
+                      </tr>
+                      <tr>
+                        <td class="align-middle"><strong>Total</strong></td>
+                        <td class="text-center align-middle"><strong> &nbsp; {{(order.total_price) ? order.total_price : '0'}} KSH</strong></td>
+                      </tr>
+                      @if(order.promo_id)
+                        <tr>
+                          <td class="align-middle"><strong>Price After Discount</strong></td>
+                          <td class="text-center align-middle"><strong> &nbsp; {{(order.promo_price) ? order.promo_price : '0'}} KSH</strong></td>
+                        </tr>
+                      @endif
+                      <tr>
+                        <td class="align-middle"><strong>Delivery Cost</strong></td>
+                        <td class="text-center align-middle"><strong> &nbsp; {{(order.delivery.price) ? order.delivery.price : '0'}} KSH</strong></td>
+                      </tr>
+                      <tr>
+                        <td class="align-middle"><strong>Total Amount</strong></td>
+                        <td class="text-center align-middle"><strong> &nbsp; {{(order.final_price) ? order.final_price : '0'}} KSH</strong></td>
+                      </tr>
+                    </tbody>
+                </table>
+                </div><!-- end of cv_db_setup_card-->
+              </div>
+
+              <div class="row p-0 m-0">
+
+
+                <div class="col-sm-12">
+                  <div class="card mb-4">
+                    <div class="card-header"><i class="fa fa-address-card"></i> <strong>Shipping Address</strong></div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered ">
+                            <thead>
+                              <tr>
+                                <th class="text-center" >House</th>
+                                <th class="text-center" >Address</th>
+                                <th class="text-center" >Estate</th>
+                                <th class="text-center" >City</th>
+                                <th class="text-center" >Country</th>
+                                <th class="text-center" >Zip Code</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="text-center" >{{(order.address.house_num) ? order.address.house_num : 'N/A'}}</td>
+                                <td class="text-center" >{{(order.address.address) ? order.address.address : 'N/A'}}</td>
+                                <td class="text-center" >{{(order.address.estate) ? order.address.estate : 'N/A'}}</td>
+                                <td class="text-center" >{{(order.address.city) ? order.address.city : 'N/A' }}</td>
+                                <td class="text-center" >{{(order.address.country) ? order.address.country : 'N/A' }}</td>
+                                <td class="text-center" >{{(order.address.zip) ? order.address.zip : 'N/A' }}</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {{--  order status  --}}
+                <div class="col-sm-6">
+                  <div class="card mb-4">
+                    <div class="card-header"><i class="fa fa-user"></i> <strong>Customer Details</strong></div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered ">
+                            <thead>
+                              <tr>
+                                <th class="text-center" >First Name</th>
+                                <th class="text-center" >Last Name</th>
+                                <th class="text-center" >Phone</th>
+                                <th class="text-center" >Email</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="text-center" >{{(order.address.first_name) ? order.address.first_name : 'N/A'}}</td>
+                                <td class="text-center" >{{(order.address.last_name) ? order.address.last_name : 'N/A'}}</td>
+                                <td class="text-center" >{{(order.address.phone) ? order.address.phone : 'N/A'}}</td>
+                                <td class="text-center" >{{(order.address.email) ? order.address.email : 'N/A'}}</td>
+                              </tr>
+                              <tr>
+                                <td class="text-center" ><strong>Comment</strong></td>
+                                <td colspan="3">{{(order.address.comments) ? order.address.comments : 'N/A'}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+
+                <div class="col-sm-6">
+                  <div class="card mb-4">
+                    <div class="card-header"><i class="fa fa-wallet"></i> <strong>Order status</strong></div>
+                    <div class="card-body">
+                        <table class="table border orderDetailsTable">
+                          <tbody>
+                            <tr>
+                              <th scope="row">ORDER STATUS</th>
+                              <td>:</td>
+                              <td><span class="orderStatus p-1 bg-primary">IN Stock</span></td>
+                            </tr><!-- end of tr -->
+
+                            <tr>
+                              <th scope="row">ORDER DATE</th>
+                              <td>:</td>
+                              <td><span class="orderDate">{{(order.created_at) ? order.created_at : 'N/A'}}</span></td>
+                            </tr><!-- end of tr -->
+
+                             <tr>
+                              <th scope="row">PAYMENT METHOD</th>
+                              <td>:</td>
+                              <td><span class="orderDate">{{ (payment_method.method) ? payment_method.method : 'N/A' }}</span></td>
+                            </tr><!-- end of tr -->
+
+                            <tr>
+                              <th scope="row">DELIVERY METHOD</th>
+                              <td>:</td>
+                              <td><span class="deliveryMethod p-1 bg-info rounded">{{(order.delivery.delivery_name) ? order.delivery.delivery_name : 'N/A'}}</span></td>
+                            </tr><!-- end of tr -->
+                          </tbody><!-- end of tbody -->
+                        </table><!-- end of tbale -->
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="card-header">
+                <p><strong>VOUCHER NO: </strong><b class="vouterId">{{(order.order_code) ? order.order_code : 'N/A'}}</b>
+                <a href="/admin/order-confirmation/{{order.id}}/{{'DECLINED'}}" class="btn btn-danger float-right">Decline</a>
+                <a href="/admin/order-confirmation/{{order.id}}/{{'APPROVED'}}" class="btn btn-secondary float-right mr-2">Approve</a>
+              </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- end of container -->
+    </section><!-- end of contentBody -->
+  </main>
+@endsection

@@ -1,0 +1,28 @@
+@layout('layouts.auth')
+@section('change-pass')
+<div class="card">
+    <div class="card-header text-center">
+      <div class="logoWrapper">
+        <!-- <a href="/"><img src="" alt="Logo" /></a>  -->
+        <h1><a href="#">LOGO</a></h1>
+      </div><!-- end of logoWrapper -->
+    </div><!-- end of card-header -->
+
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <label for="createPass">Create password</label>
+          <input type="password" class="form-control mt-3" id="createPass" placeholder="Create password">
+        </div><!-- end of form-group -->
+
+        <div class="form-group">
+          <label for="confirmPass">Confirm password</label>
+          <input type="password" class="form-control mt-3" id="confirmPass" placeholder="Confirm password">
+        </div><!-- end of form-group -->
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form><!-- end of form -->
+    </div><!-- end of card-body -->
+
+  </div>
+@endsection

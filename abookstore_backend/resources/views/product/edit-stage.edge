@@ -1,0 +1,41 @@
+@layout('layouts.main')
+@section('main')
+<main class="mainContent clearfix" id="mainContent">
+    <section class="contentBody mt-4 clearfix" id="contentBody">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+              <div class="card">
+              <div class="card-header"><h3>Edit</h3>{{stage.title}}</div>
+                  <div class="card-body">
+                
+                  <form action="{{route('/stage.update',{id:stage.id})+'?_method=PATCH'}}" method="POST">
+                     {{ csrfField() }}
+                      <div class="form-group">
+
+                        <label for="category">Category Name</label>
+                         <select name="category_id">
+                            @each(category in categories)
+                              <option {{category.id === stage.category_id ? 'selected' :''}} value="{{category.id}}">{{category.category}}</option>
+                            @endeach
+                         </select>
+                      </div>
+
+                      <div class="from-group">
+                        <label for="filterName">Name</label>
+                        <input type="text" name="stage" value="{{stage.stage}}" class="form-control" >
+                      </div>
+                     
+                      <div class="text-right mt-3">
+                      <a href="{{route('/stage.index')}}" class="btn btn-primary float-right text-light">Cancel</a>
+                        <button type="submit" class="btn btn-primary float-right mr-2">Update</button>
+                      </div>
+                    </form>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div><!-- end of container -->
+    </section><!-- end of contentBody -->
+  </main>
+@endsection

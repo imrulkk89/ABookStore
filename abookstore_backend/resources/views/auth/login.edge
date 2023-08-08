@@ -1,0 +1,44 @@
+@layout('layouts.auth')
+
+@section('login')
+<div class="card">
+    <div class="card-header text-center">
+      <div class="logoWrapper">
+        <!-- <a href="/"><img src="" alt="Logo" /></a>  -->
+        <h1><a href="/">LOGO</a></h1>
+      </div><!-- end of logoWrapper -->
+    </div><!-- end of card-header -->
+
+    <div class="card-body">
+        @if(flashMessage('notification_success'))
+          <div class="row">
+              <div class="col-md-12">
+                <div class="alert alert-success notification">{{flashMessage('notification_success')}}</div>
+              </div>
+          </div>
+          @elseif(flashMessage('notification_failure'))
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger notification">{{flashMessage('notification_failure')}}</div>
+                </div>
+            </div>
+          @else
+        @endif
+    <form action="{{ route('admin.login')}}" method="POST">
+         {{ csrfField() }}
+        <div class="form-group">
+          <label for="username">Email</label>
+          <input type="text" name="email" class="form-control mt-3" id="username" aria-describedby="emailHelp" placeholder="Your Email"/>
+        </div><!-- end of form-group -->
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" class="form-control mt-3" id="password" placeholder="Password"/>
+        </div><!-- end of form-group -->
+
+        <input type="submit" value="Login" class="btn btn-primary" />
+      </form><!-- end of form -->
+    </div><!-- end of card-body -->
+
+  </div><!-- end of card -->
+@endsection

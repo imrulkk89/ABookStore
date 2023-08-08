@@ -1,0 +1,30 @@
+[
+  {
+    "name":"Order status",
+    "url": "/my-order"
+  },
+  {
+    "name":"How to place an order",
+    "url": "/place/order"
+  },
+  {
+    "name":"Return",
+    "url": "/refunds"
+  },
+  {
+    "name":"Terms & Conditions",
+    "url": "/term/conditions"
+  },
+  {
+    "name":"Delivery details",
+    "url": "/delivery/details"
+  },
+  {
+    "name":"Privacy Policy",
+    "url": "/privacy"
+  },
+  {
+    "name":"Blog",
+    "url": "https://blog.abookstore.co.ke/"
+  }
+]

@@ -1,0 +1,32 @@
+@layout('layouts.main')
+@section('main')
+<main class="mainContent clearfix" id="mainContent">
+    <section class="contentBody mt-4 clearfix" id="contentBody">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+              <div class="card">
+                  <div class="card-header"><h3>Edit {{edit_title}}</h3></div>
+                  <div class="card-body">
+                
+                  <form action="/admin/update-filter/{{edit_title}}" method="POST">
+                    {{ csrfField() }}
+                      <div class="form-group">
+                        <label for="category">Category Name</label>
+                      <input class="form-control" type="{{ edit_title==='Stage' ? "text" : "hidden" }}" name="category" disabled value="{{edit_title==='Stage' ? data.category.category : ''}}">
+                        <label for="filterName">Name</label>
+                      <input type="hidden" name="id" value="{{edit_title==='Stage' ? data.id : data.id}}">
+                      <input type="text" name="name" value="{{ edit_title==='Stage' ? data.stage : data.name }}" class="form-control" id="filterName" aria-describedby="emailHelp">
+                      </div>
+                     
+                      <a href="/admin/all-filter" class="btn btn-primary float-right text-light">Cancel</a>
+                      <button type="submit" class="btn btn-primary float-right mr-2">Update</button>
+                    </form>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div><!-- end of container -->
+    </section><!-- end of contentBody -->
+  </main>
+@endsection

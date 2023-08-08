@@ -1,0 +1,97 @@
+.radio_item{
+    display: none !important;
+    }
+
+
+    
+ 
+
+label {
+ cursor: pointer;   
+}
+
+.paymentMethodsArea ul.nav.nav-tabs {
+    width: 100%;
+}
+
+.paymentMethodsArea ul.nav.nav-tabs li.nav-item {
+    width: 33%;
+}
+
+.paymentMethodsArea ul.nav.nav-tabs li.nav-item .active {
+    border-top: 5px solid;
+}
+.paymentMethodsArea ul.nav.nav-tabs li.nav-item img {
+    height: 100px;
+}
+
+.paymentMethodsArea .tab-content {
+    margin-top: 25px;
+}
+
+
+
+.paymentMethodsArea1 nav.nav.card-header-tabs.nav-tabs {
+    width: 100%;
+}
+
+.paymentMethodsArea1 a#controlled-tab-example-tab-visaMaster {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 33%;
+	height: 100px;
+
+}
+.paymentMethodsArea1 a#controlled-tab-example-tab-visaMaster img{
+	width: 200px;
+}
+
+.paymentMethodsArea1 a#controlled-tab-example-tab-mpesa {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 33%;
+	height: 100px;
+}
+
+.paymentMethodsArea1 a#controlled-tab-example-tab-mpesa img{
+	width: 200px;
+}
+
+
+.paymentMethodsArea1 a#controlled-tab-example-tab-payPal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 33%;
+	height: 100px;
+}
+.paymentMethodsArea1 a#controlled-tab-example-tab-payPal img {
+    width: 200px;
+}
+
+.paymentMethodsArea1 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border-top: 5px solid#0b7bc1;
+}
+
+.paymentMethodsArea1 .tab-content {
+    margin-top: 15px;
+}
+
+label.label_item img {
+	width: 70px;
+    height: 40px;
+	margin-left: 10px;
+}
+
+
+.paypalTitle{
+	margin-top: 20px;
+	padding: 10px;
+}
+.card-area{
+	display: flex;
+	align-items: center;
+	padding: 10px;
+}

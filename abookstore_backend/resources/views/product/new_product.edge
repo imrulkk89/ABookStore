@@ -1,0 +1,435 @@
+@layout('layouts.main')
+
+@section('main')
+
+<main class="mainContent clearfix" id="mainContent">
+
+  @if(flashMessage('notification_success'))
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success notification">{{flashMessage('notification_success')}}</div>
+    </div>
+  </div>
+  @elseif(flashMessage('notification_failure'))
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-danger notification">{{flashMessage('notification_failure')}}</div>
+    </div>
+  </div>
+  @else
+  @endif
+  <section class="contentBody mt-4 clearfix" id="contentBody">
+    <div class="container-fluid">
+      <form id="add-product" class="addNewBookForm" method="POST" action="/admin/product" enctype="multipart/form-data">
+        {{ csrfField() }}
+
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-12 col-sm mb-sm-0 mb-3">
+                <h2>Add New Product</h2>
+              </div><!-- end of col -->
+
+              <div class="col-12 col-sm">
+                <div class="editBtnSettings ">
+                  <ul class="editBtnList d-flex justify-content-sm-end justify-content-start">
+                    <li>
+                      <button type="submit" class="btn btn-primary">Add Product</button>
+                    </li>
+                    <li>
+                      <a href="/admin/product/" class="btn btn-secondary">Cancel</a>
+                    </li>
+                  </ul>
+                </div>
+              </div><!-- end of col -->
+
+            </div><!-- end of row -->
+          </div>
+          <div class="card-body">
+
+            <div class="row mb-4">
+              <div class="col-md-8 col-12">
+
+                <div class="form-group">
+                  <label for="productTtle">Product Title</label>
+                  <input type="text" name="product_title" class="form-control" id="productTtle" placeholder=""
+                    value="{{old('product_title', '')}}" />
+                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('product_title'), hasErrorFor('product_title')) }}
+                </div>
+
+                <div class="form-group">
+                  <label for="shortDescription">Short Description</label>
+                  <textarea name="short_description" id="shortDescription" class="form-control"
+                    rows="2">{{old('short_description', '')}}</textarea>
+                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('short_description'), hasErrorFor('short_description')) }}
+                </div>
+
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea name="long_description" id="description" class="form-control"
+                    rows="4">{{old('long_description', '')}}</textarea>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label for="category">Categories </label>
+                      <select name="category" class="form-control" id="category">
+                        <option value="0">Select Category</option>
+                        @each(category in categories)
+                        <option {{(old('category') == category.id ? 'selected': '')}} value={{category.id}}>
+                          {{category.category}}</option>
+                        @endeach
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label for="stage">Stage</label>
+                      <select name="stage" class="form-control" id="stage">
+                        <option value="0">Select Stage</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label for="numberOfPages">Product Status </label>
+                      <select name="product_status" class="form-control" id="exampleFormControlSelect1">
+                        <option>Select Status</option>
+                        <option {{(old('product_status') == '1' ? 'selected': '')}} selected="selected" value="1">
+                          Available </option>
+                        <option {{(old('product_status') == '2' ? 'selected': '')}} value="2">Unavailable</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="productPrice">Tags</label>
+                  <input type="text" name="tags" class="form-control" id="productPrice"
+                    value="{{old('tags', '')}}" />
+                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('tags'), hasErrorFor('tags')) }}
+                </div>
+
+                <div class="new_pd_price_sp product_price_sp">
+                  <ul class="nav nav-tabs mb-1 pd_price_sp_tab" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link active" data-toggle="tab" href="#priceTab" role="tab">Price</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" data-toggle="tab" href="#specificationsTab" role="tab">Specifications</a>
+                    </li>
+                  </ul>
+      
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="priceTab" role="tabpanel">
+                      <div class="card">
+                        <div class="card-body">
+
+                          <div class="product_reg_price_promo row">
+                            <!--  <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productPrice">Product Price </label>
+                                  <input type="text" name="price" class="form-control" id="productPrice" value="{{old('price', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('price'), hasErrorFor('price')) }}
+                                </div>
+                              </div>
+
+                              <div class="col-sm-4 col-12">
+                                <div class="form-group">
+                                  <label for="productSalesPrice">Product Sales Price </label>
+                                  <input type="text" name="sales_price" class="form-control" id="productSalesPrice"
+                                    value="{{old('sales_price', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('sales_price'), hasErrorFor('sales_price')) }}
+                                </div>
+                              </div> -->
+      
+                            <div class="col-sm-4 col-12">
+                              <div class="form-group">
+                                <label for="promo_code">Product Promo Code </label>
+                                <select name="promo_code" class="form-control" id="promo_code">
+                                  <option selected disabled>Select Promo Code</option>
+                                  @each(code in promo_codes)
+                                  <option value={{code.id}}>
+                                    {{code.code}}
+                                  </option>
+                                  @endeach
+                                </select>
+                              </div>
+                            </div>
+                            
+                          </div>
+      
+                          <div id="bookAdditionalPrices">
+      
+                            <div class="row">
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productHardCoverPrice">Product Hard Cover Price </label>
+                                  <input type="text" name="price_hardcover" class="form-control" id="productHardCoverPrice"
+                                    value="{{old('price_hardcover', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('price_hardcover'), hasErrorFor('price_hardcover')) }}
+                                </div>
+                              </div>
+      
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productHardCoverDiscountPrice">Hard Cover Discount Price </label>
+                                  <input type="text" name="sales_price_hardcover" class="form-control" id="productHardCoverDiscountPrice"
+                                    value="{{old('sales_price_hardcover', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('sales_price_hardcover'), hasErrorFor('sales_price_hardcover')) }}
+                                </div>
+                              </div>
+      
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="stock">Stock </label>
+                                  <input type="text" name="stock" class="form-control" id="stock" placeholder="00"
+                                    value="{{old('stock', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('stock'), hasErrorFor('stock')) }}
+                                </div>
+                              </div>
+                            </div>
+      
+                            <div class="row">
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productAudioBookPrice">Product Audio Book Price </label>
+                                  <input type="text" name="price_audiobook" class="form-control" id="productAudioBookPrice"
+                                    value="{{old('price_audiobook', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('price_audiobook'), hasErrorFor('price_audiobook')) }}
+                                </div>
+                              </div>
+      
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productAudioBookDiscountPrice">Audio Book Discount Price </label>
+                                  <input type="text" name="sales_price_audiobook" class="form-control" id="productAudioBookDiscountPrice"
+                                    value="{{old('sales_price_audiobook', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('sales_price_audiobook'), hasErrorFor('sales_price_audiobook')) }}
+                                </div>
+                              </div>
+      
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productAudioBookFile">Product Audio Book File </label>
+                                  <input type="file" name="audiobook_file" accept=".mp3" class="form-control-file" id="productAudioBookFile" multiple />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('audiobook_file'), hasErrorFor('audiobook_file')) }}
+                                </div>
+                              </div>
+                            </div>
+      
+                            <div class="row">
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productEPUBPrice">Product EPUB Price </label>
+                                  <input type="text" name="price_epub" class="form-control" id="productEPUBPrice"
+                                    value="{{old('price_epub', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('price_epub'), hasErrorFor('price_epub')) }}
+                                </div>
+                              </div>
+      
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productEPUBDiscountPrice">EPUB Discount Price </label>
+                                  <input type="text" name="sales_price_epub" class="form-control" id="productEPUBDiscountPrice"
+                                    value="{{old('sales_price_epub', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('sales_price_epub'), hasErrorFor('sales_price_epub')) }}
+                                </div>
+                              </div>
+      
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productEPUBFile">Product EPUB File </label>
+                                  <input type="file" name="epub_file" accept=".epub" class="form-control-file" id="productEPUBFile" multiple />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('epub_file'), hasErrorFor('epub_file')) }}
+                                </div>
+                              </div>
+                            </div>
+      
+                            <div class="row">
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productPdfPrice">Product PDF Price </label>
+                                  <input type="text" name="price_pdf" class="form-control" id="productPdfPrice"
+                                    value="{{old('price_pdf', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('price_pdf'), hasErrorFor('price_pdf')) }}
+                                </div>
+                              </div>
+      
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productPdfDiscountPrice">PDF Discount Price </label>
+                                  <input type="text" name="sales_price_pdf" class="form-control" id="productPdfDiscountPrice"
+                                    value="{{old('sales_price_pdf', '')}}" />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('sales_price_pdf'), hasErrorFor('sales_price_pdf')) }}
+                                </div>
+                              </div>
+      
+                              <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                  <label for="productPDFFile">Product PDF File </label>
+                                  <input type="file" name="pdf_file" accept="application/pdf" class="form-control-file" id="productPDFFile" multiple />
+                                  {{ elIf('<span class="field-required">$self</span>', getErrorFor('pdf_file'), hasErrorFor('pdf_file')) }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+      
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="specificationsTab" role="tabpanel">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-4 col-12">
+                              <div class="form-group">
+                                <label for="authorName">Author </label>
+                                <input type="text" name="author" class="form-control" id="authorName" list="author" placeholder=""
+                                  value="{{old('author', '')}}" />
+                                {{ elIf('<span class="field-required">$self</span>', getErrorFor('author'), hasErrorFor('author')) }}
+                                <datalist id="author">
+                                  @each(author in authors)
+                                  <option>{{author.name}}</option>
+                                  @endeach
+                                </datalist>
+                              </div>
+                            </div>
+      
+                            <div class="col-md-4 col-12">
+                              <div class="form-group">
+                                <label for="disciplineName">Discipline </label>
+                                <input type="text" name="discipline" class="form-control" id="disciplineName" list="dicipline"
+                                  placeholder="" value="{{old('discipline', '')}}" />
+                                {{ elIf('<span class="field-required">$self</span>', getErrorFor('discipline'), hasErrorFor('discipline')) }}
+                                <datalist id="dicipline">
+                                  @each(dicipline in disciplines)
+                                  <option>{{dicipline.name}}</option>
+                                  @endeach
+                                </datalist>
+                              </div>
+                            </div>
+      
+                            <div class="col-md-4 col-12">
+                              <div class="form-group">
+                                <label for="publishingHouse">Publishing house </label>
+                                <input type="text" name="publisher" class="form-control" id="publishingHouse" list="publisher"
+                                  placeholder="" value="{{old('publisher', '')}}" />
+                                {{ elIf('<span class="field-required">$self</span>', getErrorFor('publisher'), hasErrorFor('publisher')) }}
+                                <datalist id="publisher">
+                                  @each(publisher in publishers)
+                                  <option>{{publisher.name}}</option>
+                                  @endeach
+                                </datalist>
+                              </div>
+                            </div>
+      
+                            <div class="col-md-4 col-12">
+                              <div class="form-group">
+                                <label for="publishingYear">Publishing year </label>
+                                <input type="text" name="publishing_year" class="form-control" id="publishingYear"
+                                  list="publishing_year" placeholder="" value="{{old('publishing_year', '')}}" />
+                                {{ elIf('<span class="field-required">$self</span>', getErrorFor('publishing_year'), hasErrorFor('publishing_year')) }}
+                                <datalist id="publishing_year">
+                                  @each(publishing_year in publishing_years)
+                                  <option>{{publishing_year.name}}</option>
+                                  @endeach
+                                </datalist>
+                              </div>
+                            </div>
+      
+                            <div class="col-md-4 col-12">
+                              <div class="form-group">
+                                <label for="language">Language </label>
+                                <input type="text" name="language" class="form-control" id="language" list="book-language"
+                                  placeholder="" value="{{old('language', '')}}" />
+                                {{ elIf('<span class="field-required">$self</span>', getErrorFor('language'), hasErrorFor('language')) }}
+                                <datalist id="book-language">
+                                  @each(language in languages)
+                                  <option>{{language.name}}</option>
+                                  @endeach
+                                </datalist>
+                              </div>
+                            </div>
+      
+                            <div class="col-md-4 col-12">
+                              <div class="form-group">
+                                <label for="numberOfPages">Number of pages </label>
+                                <input type="text" name="page_number" class="form-control" id="numberOfPages" placeholder=""
+                                  value="{{old('page_number', '')}}" />
+                                {{ elIf('<span class="field-required">$self</span>', getErrorFor('page_number'), hasErrorFor('page_number')) }}
+                              </div>
+                            </div>
+      
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-12">
+                <div class="productGallery">
+                  <div class="row justify-content-center">
+                    <div class="col-md-6 col-12">
+                      <div class="productPreviewImg">
+                        <img src="/images/books/product_demo_img.png" alt="" id="main-image" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul class="productGalleryList row">
+                    <li class="productSingleImg col">
+                      <span class="removeImgIcon" id="removeIcon1"><i class="far fa-trash-alt"></i></span>
+                      <label class="imageBrowse bgGray" for="imageBrowse1">
+                        <div id="image1-blank" class="browseImg">
+                          <i class="far fa-image"></i>
+                          <span>browse</span>
+                        </div>
+                        <img id="image1" src="" alt="First Cover Image" />
+                        <input type="file" name="cover_images[0]" class="form-control-file" id="imageBrowse1">
+                      </label>
+                    </li><!-- end of li -->
+
+                    <li class="productSingleImg col">
+                      <span class="removeImgIcon" id="removeIcon2"><i class="far fa-trash-alt"></i></span>
+                      <label class="imageBrowse bgGray" for="imageBrowse2">
+                        <div id="image2-blank" class="browseImg">
+                          <i class="far fa-image"></i>
+                          <span>browse</span>
+                        </div>
+                        <img id="image2" src="" alt="Second Cover Image" />
+                        <input type="file" name="cover_images[1]" class="form-control-file" id="imageBrowse2">
+                      </label>
+                    </li><!-- end of li -->
+
+                    <li class="productSingleImg col">
+                      <span class="removeImgIcon" id="removeIcon3"><i class="far fa-trash-alt"></i></span>
+                      <label class="imageBrowse bgGray" for="imageBrowse3">
+                        <div id="image3-blank" class="browseImg">
+                          <i class="far fa-image"></i>
+                          <span>browse</span>
+                        </div>
+                        <img id="image3" src="" alt="Third Cover Image" />
+                        <input type="file" name="cover_images[2]" class="form-control-file" id="imageBrowse3">
+                      </label>
+                    </li><!-- end of li -->
+                  </ul><!-- end of productGalleryList -->
+
+                </div><!-- end of productGallery -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+
+    </div><!-- end of container -->
+  </section><!-- end of contentBody -->
+</main><!-- end of mainContentBody -->
+@endsection

@@ -1,0 +1,21 @@
+[
+    {
+       "payment_type": "MPESA",
+        "mm": "",
+        "yy": "",
+        "card_number": ""
+
+    },
+    {
+       "payment_type": "VISA",
+        "mm": "",
+        "yy": "",
+        "card_number": ""
+    },
+    {
+       "payment_type": "PAYPAL",
+        "mm": "",
+        "yy": "",
+        "card_number": ""
+    }
+ ]

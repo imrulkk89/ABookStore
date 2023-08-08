@@ -1,0 +1,34 @@
+<header class="header cv_db_header" id="header">
+  <div class="container-fluid">
+      <div class="row justify-content-between">
+          <div class="col-sm-2">
+            <button class="cv_db_aside_nav_toggle_btn"><i class="fas fa-align-right"></i></button>
+          </div><!-- end of col2 -->
+
+          <div class="col-sm-4">
+              <ul class="navbar-nav cv_db_user_nav justify-content-end">
+                  <li>
+                      <div class="cv_db_ueser_card" id="user_card">
+                          <a href="/dashboard" class="cv_db_dropdown dropdown-toggle" id="cv_bd_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <div class="cv_db_user_info">
+                                  <h3>{{auth.user.user_type}}</h3>
+                              </div><!-- end of cv_db_user_info -->
+                              <div class="cv_db_user_avater">
+                                  <img src="{{ assetsUrl('avatar.png') }}" alt="User Avater">
+                              </div><!-- end of cv_db_user_avater -->
+                          </a>
+                          <div class="cv_bd_dropdown_menu cv_db_admin_nav dropdown-menu cv_db_slideIn" aria-labelledby="cv_bd_dropdown">
+                              <div class="cv_db_admin_nav_title"><h6>Welcome</h6></div>
+                          <a href="/admin/user-edit/{{auth.user.id}}" class="cv_db_dropdown_item dropdown-item"><i class="fas fa-user"></i> Profile</a>
+                              <a href="/admin/dashboard" class="cv_db_dropdown_item dropdown-item"><i class="fas fa-chart-line"></i> Activity</a>
+                              <a href="/admin/logout" class="cv_db_dropdown_item dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                              </div>
+                      </div><!-- end of cv_db_user_card -->
+                  </li><!-- end of li -->
+
+              </ul><!-- end of cv_db_user_nav -->
+          </div><!-- end of col4 -->
+
+      </div><!-- end of row -->
+  </div><!-- end of container -->
+</header><!-- end of header -->

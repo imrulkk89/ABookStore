@@ -1,0 +1,107 @@
+@layout('layouts.main')
+
+@section('main')
+<section class="cv_db_status_sec clearfix cv_db_sec_gap10 bgGray" id="status_sec">
+  <div class="container-fluid cv_db_full_height">
+    <div class="row">
+      <div class="col">
+        <div class="cv_db_pageinfo">
+          <h1 class="cv_db_pageinfo_title">Add User</h1>
+        </div><!-- end of cv_db_pageinfo -->
+      </div><!-- end of col -->
+    </div><!-- end of row -->
+  </div><!-- end of container-fluid -->
+</section>
+<section class="cv_db_setup_general clearfix mt-5" id="setup_general">
+  <div class="container-fluid">
+
+    @if(flashMessage('notification_success'))
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-success notification">{{flashMessage('notification_success')}}</div>
+      </div>
+    </div>
+    @elseif(flashMessage('notification_failure'))
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-danger notification">{{flashMessage('notification_failure')}}</div>
+      </div>
+    </div>
+    @else
+    @endif
+    <div class="row">
+      <div class="col">
+        <div class="cv_db_setup_card card shadow border-0">
+          <div class="cv_db_card_header">
+            <div class="row">
+              <div class="col">
+                <h3 class="mb-0">Create New User</h3>
+              </div><!-- end of col -->
+
+              <div class="col text-right">
+                <a href="/admin/all-users" class="btn btn-sm btn-primary"><i class="fas fa-chevron-left"></i> Back to
+                  User List</a>
+              </div><!-- end of col -->
+            </div><!-- end of row -->
+          </div><!-- end of cv_db_card_header -->
+
+          <div class="col-sm-6">
+            <form method="POST" action="/admin/user-register" autocomplete="off">
+              {{ csrfField() }}
+              <h6 class="heading-small text-muted mt-4 mb-4">User information</h6>
+
+              <div class="form-group">
+                <label class="form-control-label mb-2" for="input-first-name">First Name</label>
+                <input type="text" name="first_name" id="input-first-name" class="form-control form-control-alternative"
+                  placeholder="First Name" value="{{old('first_name', '')}}" required="" autofocus="" />
+              </div><!-- end of form-group -->
+
+              <div class="form-group">
+                <label class="form-control-label mb-2" for="input-last-name">Last Name</label>
+                <input type="text" name="last_name" id="input-last-name" class="form-control form-control-alternative"
+                  placeholder="Last Name" value="{{old('last_name', '')}}" required="" autofocus="">
+              </div><!-- end of form-group -->
+
+
+              <div class="form-group">
+                <label class="form-control-label mb-2" for="input-email">Email</label>
+                <input type="email" name="email" id="input-email" class="form-control form-control-alternative"
+                  placeholder="Email" value = "{{old('email', '')}}" required="">
+              </div><!-- end of form-group -->
+
+
+
+              <div class="form-group">
+                <label class="form-control-label mb-2" for="input-password">Password</label>
+                <input type="password" name="password" id="input-password" class="form-control form-control-alternative" placeholder="Password" value = "" required="">
+                {{ elIf('<span class="field-required">$self</span>', getErrorFor('password'), hasErrorFor('password')) }}
+              </div><!-- end of form-group -->
+
+              <div class="form-group">
+                <label class="form-control-label mb-2" for="input-password-confirmation">Confirm Password</label>
+                <input type="password" name="password_confirmation" id="input-password-confirmation"
+                  class="form-control form-control-alternative" placeholder="Confirm Password" value="" required="">
+              </div><!-- end of form-group -->
+
+              <div class="form-group">
+                <label class="form-control-label mb-2" for="role">User Role</label>
+                <select type="password" name="user_type" id="input-password-confirmation"
+                  class="form-control form-control-alternative" required="">
+                  <option value="SUPER_ADMIN">SUPER ADMIN</option>
+                  <option value="ADMIN">ADMIN</option>
+                  <option value="MAINTAINER">MAINTAINER</option>
+                  <option value="USER">USER</option>
+                </select>
+              </div><!-- end of form-group -->
+
+              <div class="mb-4">
+                <input type="submit" class="btn btn-primary mt-4" value="Add User" />
+              </div><!-- end of form-group -->
+            </form><!-- end of form -->
+          </div><!-- end of col6 -->
+        </div><!-- end of card -->
+      </div><!-- end of col -->
+    </div><!-- end of row -->
+  </div><!-- end of container-fluid -->
+</section>
+@endsection

@@ -1,0 +1,173 @@
+@layout('layouts.main')
+
+@section('main')
+  <main class="mainContent clearfix" id="mainContent">
+    <section class="contentBody mt-4 clearfix" id="contentBody">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+
+                  <div class="col">
+                    <h2>All Product</h2>
+                  </div><!-- end of col -->
+
+                  <div class="col text-right mb-2">
+                      <a href="/admin/product/create" class="btn btn-primary">Add Product</a>
+                  </div><!-- end of col -->
+                </div><!-- end of row -->
+                <div class="row justify-content-between">
+                  <div class="col">
+                    <ul class="subList d-flex clearfix">
+                      <li><a href="/admin/product" class="current">All <span class="count">({{allBook ? allBook : 0}})</span></a></li>
+                      <li><a href="/admin/product/status/available">Avilable <span class="count">({{available ? available : 0}})</span></a></li>
+                      <li><a href="/admin/product/status/unavailable">Unavilable <span class="count">({{UnAvailable ? UnAvailable :0}})</span></a></li>
+                      <li><a href="/admin/trash/product"> Trash <span class="count">({{allTrash ? allTrash : 0}})</span></a></li>
+                    </ul><!-- end of subList -->
+                  </div><!-- end of col -->
+
+                  <div class="col-sm-3">
+                    <form action="/admin/product/search" method="POST">
+                      <div class="input-group">
+                        {{ csrfField() }}
+                        <input type="text" class="form-control" name="query" placeholder="Search a Book"  aria-describedby="basic-addon1">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-secondary" type="submit"> <i class="fas fa-search"></i> </button>
+                        </div><!-- end of input-group-prepend -->
+                      </div><!-- end of input-group -->
+                    </form><!-- end of form -->
+                  </div><!-- end of col -->
+
+
+
+                </div><!-- end of row -->
+
+                <div class="row mt-2">
+                  <div class="col">
+                    <form class="actionForm" action="/admin/product" method="GET">
+                      <div class="row">
+                        <div class="col-auto pr-1">
+                          <div class="d-flex form-group actionGroup">
+                            <select class="form-control" name="action" id="actions">
+                              <option>Actions</option>
+                              <option>Move to Trash</option>
+                            </select>
+                            <button class="btn btn-secondary actionBtn ml-2" id="action-apply-trash-all">Apply</button>
+                          </div><!-- end of form-group -->
+                        </div><!-- end of col -->
+
+                        <div class="col-auto pl-1">
+                          <div class="d-flex form-group actionGroup">
+                            <select name="category_id" class="form-control actionGroup ml-2">
+                              <option>All Categories</option>
+
+                              @each(category in categories)
+                                 <option {{category.id === old('category_id') ? 'slelected' : ''}} value={{category.id}}>{{category.category}}</option>
+                              @endeach
+
+                            </select>
+                            <input type="submit" class="btn btn-secondary actionBtn ml-2" value="Filter" />
+                          </div><!-- end of form-group -->
+                        </div><!-- end of col -->
+
+                        <div class="col">
+                          <nav class="actionNav" aria-label="Page navigation">
+                            <ul class="pagination flex-row justify-content-end align-items-center">
+                              <li class="page-item"><a class="page-link" href="/admin/products/{{1}}"><i class="fas fa-angle-double-left"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="/admin/products/{{(page > 1 ? page-1 : 1 )}}"><i class="fas fa-angle-left"></i></a></li>
+                            <li class="page-item"><input class="form-control" type="text" value="{{page}}" /></li>
+                              <li class="page-item"><span class="numOf">of {{totalPage}}</span></li>
+                            <li class="page-item"><a class="page-link" href="/admin/products/{{(page === totalPage ? totalPage : page+1 )}}"><i class="fas fa-angle-right"></i></a></li>
+                              <li class="page-item"><a class="page-link" href="/admin/products/{{totalPage}}"><i class="fas fa-angle-double-right"></i></a></li>
+                            </ul><!-- end of pagination -->
+                          </nav><!-- end of actionNav -->
+                        </div><!-- end of col -->
+                      </div><!-- end of row -->
+                    </form><!-- end of form -->
+                  </div><!-- end of col -->
+                </div><!-- end of row -->
+              </div><!-- end of card-header -->
+
+              <div class="card-body">
+                <div class="table-responsive" id="cv_db_table_area">
+                  @if(books.length===0)
+                  <h2 class="text-center">
+                    No Book found in your database please add some books
+
+                  </h2>
+                  @else
+                    <table class="table align-items-center table-flush" id="cv_db_table_income_summary">
+                    <thead class="thead-light">
+                      <tr>
+                        <th class="checkColumn" scope="col">
+                            <div class="form-check formCheckbox">
+                            <input class="form-check-input" type="checkbox" value="" id="check1" />
+                            <label class="form-check-label" for="check1"></label>
+                          </div><!-- end of formCheckbox -->
+                        </th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Title</th>
+                        <th class="text-center" scope="col">Author </th>
+                        <th class="text-center" scope="col">Discipline </th>
+                        <th class="text-center" scope="col">Stage </th>
+                        <th class="text-center" scope="col">Publishing house </th>
+                        <th class="text-center" scope="col">Publishing year</th>
+                        <th class="text-center" scope="col">Language </th>
+                        <th class="text-center" scope="col">No. of pages </th>
+                        <th class="text-center" scope="col">Action </th>
+                      </tr>
+                    </thead><!-- end of thead -->
+
+                    <tbody>
+                      @each(book in books)
+                          <tr>
+                            <td class="checkColumn tdwordBrake">
+                              <div class="form-check formCheckbox">
+                              <input class="form-check-input s-checkbox" type="checkbox" name="book_id[]" value="{{book.id}}"  />
+                                <label class="form-check-label"></label>
+                              </div><!-- end of formCheckbox -->
+                            </td><!-- end of td -->
+
+                            <td class="productImgColumn tdwordBrake">
+                              <img src="{{book.cover_images.img_1}}" alt="">
+                            </td>
+                            <td class="titleColumn tdwordBrake">
+                              <strong><a href="/admin/product/{{book.id}}/edit">{{book.name}}</a></strong>
+                            </td>
+                            <td class="text-center" >{{ book.book_author.name }}</td>
+                            <td class="text-center" >{{ book.book_discipline.name }}</td>
+                            <td class="text-center" >{{ book.book_stage.stage }}</td>
+                            <td class="text-center" >{{ book.book_publisher.name }}</td>
+                            <td class="text-center" >{{ book.book_publishing_year.name }}</td>
+                            <td class="text-center" >{{ book.book_language.name }}</td>
+                            <td class="text-center" >{{ book.page_number}}</td>
+                            <td class="ActionBtnCss">
+                              <div class="action">
+                                <a href="/admin/product/{{book.id}}/edit" class="btn btn-secondary"><i class="far fa-edit"></i></a>
+                                @if(auth.user.user_type==='MAINTAINER')
+                                  {{''}}
+                                @elseif(auth.user.user_type=== 'SUPER_ADMIN' || auth.user.user_type==='ADMIN')
+                                <form action="/admin/product/{{book.id}}?_method=DELETE" method="post" class="action-delete">
+                                   {{ csrfField() }}
+                                  <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                </form>
+                                @endif
+                              </div><!-- end of actionBtn -->
+                            </td><!-- end of td -->
+                          </tr><!-- end of tr -->
+                      @endeach
+                    </tbody><!-- end of tbody -->
+                  </table><!-- end of table -->
+                </div><!-- end cv_db_table_area -->
+                @endif
+              </div><!-- end of card-body -->
+
+            </div><!-- end of card -->
+          </div><!-- end of col -->
+        </div><!-- end of row -->
+      </div><!-- end of container -->
+    </section><!-- end of contentBody -->
+  </main><!-- end of mainContentBody -->
+@endsection

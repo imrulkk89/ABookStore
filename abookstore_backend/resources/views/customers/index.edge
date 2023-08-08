@@ -1,0 +1,83 @@
+@layout('layouts.main')
+@section('main')
+<section class="cv_db_status_sec clearfix cv_db_sec_gap10 cv_db_blackwi_bg_gradient" id="status_sec">
+    <div class="container-fluid cv_db_full_height">
+      <div class="row">
+        <div class="col">
+          <div class="cv_db_pageinfo">
+            <h1 class="cv_db_pageinfo_title cv_db_text_white">All Customers</h1>
+          </div><!-- end of cv_db_pageinfo -->
+        </div><!-- end of col -->
+      </div><!-- end of row -->
+    </div><!-- end of container-fluid -->
+  </section>
+  <section class="cv_db_setup_general clearfix mt-5" id="setup_general">
+      @if(flashMessage('notification_success'))
+          <div class="row">
+              <div class="col-md-12">
+                <div class="alert alert-success notification">{{flashMessage('notification_success')}}</div>
+              </div>
+          </div>
+        @elseif(flashMessage('notification_failure'))
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger notification">{{flashMessage('notification_failure')}}</div>
+                </div>
+            </div>
+        @else
+      @endif
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="cv_db_setup_card card shadow border-0">
+            <div class="table-responsive" id="cv_db_table_area">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col"><a href="#">Name</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">EMAIL</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">PHONE</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">JOIN DATE</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">LAST LOGIN</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">LAST LOGOUT</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"><a href="#">ONLINE</a> <i class="fa fa-sort"></i></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead><!-- end of thead -->
+
+                <tbody>
+                  @each(customer in customers)
+                    <tr>
+                        <td>{{customer.first_name + " " + customer.last_name}}</td>
+                        <td>{{customer.email}}</td>
+                        <td>{{customer.phone? customer.phone : 'N/A'}}</td>
+                        <td>{{customer.created_at}}</td>
+                        <td>{{(customer.last_login) ? customer.last_login : 'N/A'}}</td>
+                        <td>{{(customer.last_logout) ? customer.last_logout : 'N/A'}}</td>
+                        <td>{{(customer.isLogin) ? 'Online' : 'Offline'}}</td>
+                        <td class="d-flex">
+                            <form action="{{route('/customer.edit',{id:customer.id})}}" method="GET">
+                              <button class="btn btn-secondary"><span class="btn-inner--text"><i class="fas fa-edit"></i></span></button>
+                            </form>
+                          &nbsp;
+                         @if(auth.user.user_type === 'MAINTAINER')
+                           {{''}}
+                         @elseif(auth.user.user_type === 'SUPER_ADMIN' || auth.user.user_type === 'ADMIN')
+                          <form action="/admin/customer/{{customer.id}}?_method=DELETE" method="POST">
+                            {{ csrfField() }}
+                            <button class="btn btn-danger" type="submit"><span class="btn-inner-text"><i class="fas fa-trash"></i></span></button>
+                          </form>
+                         @endif
+
+                        </td>
+                    </tr><!-- end of tr -->
+                  @endeach
+                </tbody><!-- end of tbody -->
+              </table><!-- end of table -->
+            </div><!-- end of cv_db_setup_card-->
+          </div><!-- end of card -->
+        </div><!-- end of col -->
+      </div><!-- end of row -->
+    </div><!-- end of container-fluid -->
+  </section>
+@endsection

@@ -1,0 +1,169 @@
+@layout('layouts.main')
+
+@section('main')
+
+  <main class="mainContent clearfix" id="mainContent">
+    <section class="contentBody mt-4 clearfix" id="contentBody">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col">
+                    <h2>All Trash Product</h2>
+                  </div><!-- end of col -->
+                </div><!-- end of row -->
+
+                <div class="row justify-content-between">
+                  <div class="col">
+                    <ul class="subList d-flex clearfix">
+                      <li><a href="/admin/product" class="current">All <span class="count">({{allBook}})</span></a></li>
+                      <li><a href="/admin/product/status/available">Available <span class="count">({{available ? available : 0}})</span></a></li>
+                      <li><a href="/admin/product/status/unavailable">Unavilable <span class="count">({{UnAvailable ? UnAvailable :0}})</span></a></li>
+                      <li><a href="/admin/trash/product">Trash <span class="count">({{allTrash ? allTrash : 0}})</span></a></li>
+                    </ul><!-- end of subList -->
+                  </div><!-- end of col -->
+
+                  <div class="col-sm-3">
+                    <form action="">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search a Book" aria-label="" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
+                        </div><!-- end of input-group-prepend -->
+                      </div><!-- end of input-group -->
+                    </form><!-- end of form -->
+                  </div><!-- end of col -->
+                </div><!-- end of row -->
+
+                <div class="row mt-2">
+                  <div class="col">
+                    <form class="actionForm" action="/admin/product" method="GET">
+                      <div class="row">
+                        <div class="col-auto pr-1">
+                          <div class="d-flex form-group actionGroup">
+                            <select class="form-control" name="action" id="actions">
+                              <option>Actions</option>
+                              <option>Restore</option>
+                            </select>
+                            <button class="btn btn-secondary actionBtn ml-2" id="action-apply-restore-all">Apply</button>
+                          </div><!-- end of form-group -->
+                        </div><!-- end of col -->
+
+                        <div class="col-auto pl-1">
+                          <div class="d-flex form-group actionGroup">
+                              {{old('category_id')}}
+                            <select name="category_id" class="form-control actionGroup ml-2">
+                              <option>All Categories</option>
+                              
+                              @each(category in categories)                                
+                                 <option {{category.id === old('category_id') ? "slelected" : ''}} value={{category.id}}>{{category.category}}</option>
+                              @endeach
+                             
+                            </select>
+                            <input type="submit" class="btn btn-secondary actionBtn ml-2" value="Filter" />
+                          </div><!-- end of form-group -->
+                        </div><!-- end of col -->
+
+                       
+                        <div class="col">
+                          <nav class="actionNav" aria-label="Page navigation">
+                            <ul class="pagination flex-row justify-content-end align-items-center">
+                              <li class="page-item"><a class="page-link" href="/admin/trash/product/{{1}}"><i class="fas fa-angle-double-left"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="/admin/trash/product/{{(page > 1 ? page-1 : 1 )}}"><i class="fas fa-angle-left"></i></a></li>
+                            <li class="page-item"><input class="form-control" type="text" value="{{page}}" /></li>
+                              <li class="page-item"><span class="numOf">of {{totalPage}}</span></li>
+                            <li class="page-item"><a class="page-link" href="/admin/trash/product/{{(page === totalPage ? totalPage : page+1 )}}"><i class="fas fa-angle-right"></i></a></li>
+                              <li class="page-item"><a class="page-link" href="/admin/trash/product/{{totalPage}}"><i class="fas fa-angle-double-right"></i></a></li>
+                            </ul><!-- end of pagination -->
+                          </nav><!-- end of actionNav -->
+                        </div><!-- end of col -->
+
+                      </div><!-- end of row -->
+
+                    </form><!-- end of form -->
+                  </div><!-- end of col -->
+                </div><!-- end of row -->
+              </div><!-- end of card-header -->
+
+              <div class="card-body">
+                <div class="table-responsive" id="cv_db_table_area">
+                  @if(books.length===0)
+                  <h2 class="text-center">No Trash product found here
+                    <br>
+                    Or
+                    <br>
+                    <a href="/admin/product">All Books</a>
+                  </h2>
+                 @else
+                  <table class="table align-items-center table-flush" id="cv_db_table_income_summary">
+                    <thead class="thead-light">
+                      <tr>
+                        <th class="checkColumn" scope="col">
+                            <div class="form-check formCheckbox">
+                            <input class="form-check-input" type="checkbox" value="" id="check1" />
+                            <label class="form-check-label" for="check1"></label>
+                          </div><!-- end of formCheckbox -->
+                        </th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author </th>
+                        <th scope="col">Discipline </th>
+                        <th scope="col">Stage </th>
+                        <th scope="col">Publishing house </th>
+                        <th scope="col">Publishing year</th>
+                        <th scope="col">Book cover</th>
+                        <th scope="col">Language </th>
+                        <th scope="col">No. of pages </th>
+                        <th scope="col">Action </th>
+                      </tr>
+                    </thead><!-- end of thead -->
+
+                    <tbody>
+                      @each(book in books)
+                          <tr>
+                            <td class="checkColumn tdwordBrake">
+                              <div class="form-check formCheckbox">
+                              <input class="form-check-input s-checkbox" type="checkbox" value="{{book.id}}"/>
+                                <label class="form-check-label"></label>
+                              </div><!-- end of formCheckbox -->
+                            </td><!-- end of td -->
+
+                            <td class="productImgColumn tdwordBrake">
+                              <img src="{{book.cover_images.img_1}}" alt="">
+                            </td>
+                            <td class="titleColumn tdwordBrake">
+                              <strong>{{book.name}}</strong>
+                            </td>
+                            <td>{{ book.book_author.name }}</td>
+                            <td>{{ book.book_discipline.name }}</td>
+                            <td>{{ book.book_stage.stage }}</td>
+                            <td>{{ book.book_publisher.name }}</td>
+                            <td>{{ book.book_publishing_year.name }}</td>
+                            <td></td>
+                            <td>{{ book.book_language.name }}</td>
+                            <td>{{ book.page_number}}</td>
+                            <td>
+                              <div class="actionBtn tdwordBrake">
+                                <a href="/admin/trash-restore/product/{{book.id}}" class="btn btn-secondary"><i class="fas fa-trash-restore"></i></a>
+                                <form action="/admin/trash/product/{{book.id}}?_method=DELETE" method="post">
+                                   {{ csrfField() }}
+                                  <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                </form>
+                              </div><!-- end of actionBtn -->
+                            </td><!-- end of td -->
+                          </tr><!-- end of tr -->
+                      @endeach
+                    </tbody><!-- end of tbody -->
+                  </table><!-- end of table -->
+                  @endif
+                </div><!-- end cv_db_table_area -->
+              </div><!-- end of card-body -->
+            </div><!-- end of card -->
+          </div><!-- end of col -->
+        </div><!-- end of row -->
+      </div><!-- end of container -->
+    </section><!-- end of contentBody -->
+  </main><!-- end of mainContentBody -->
+@endsection

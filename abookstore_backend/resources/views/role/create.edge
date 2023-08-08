@@ -1,0 +1,62 @@
+@layout('layouts.main')
+@section('main')
+<section class="cv_db_status_sec clearfix cv_db_sec_gap10 bgGray" id="status_sec">
+    <div class="container-fluid cv_db_full_height">
+      <div class="row">
+        <div class="col">
+            <div class="cv_db_pageinfo">
+              <h1 class="cv_db_pageinfo_title">Create new role</h1>
+            </div><!-- end of cv_db_pageinfo -->
+        </div><!-- end of col -->
+      </div><!-- end of row -->
+    </div><!-- end of container-fluid -->
+</section>
+<section class="cv_db_setup_general clearfix mt-5" id="setup_general">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="cv_db_setup_card card shadow border-0">
+            <div class="cv_db_card_header">
+              <div class="row">
+                <div class="col">
+                  <h3 class="mb-0">Create Role</h3>
+                </div><!-- end of col -->
+
+                <div class="col text-right">
+                    <a href="/admin/promo-code" class="btn btn-sm btn-primary"><i class="fas fa-chevron-left"></i> Back to Promo List</a>
+                </div><!-- end of col -->
+              </div><!-- end of row -->
+            </div><!-- end of cv_db_card_header -->
+
+            <div class="col-sm-6">
+              <form method="post" action="/admin/promo-code " autocomplete="off">
+                 {{ csrfField() }}
+                <div class="form-group">
+                  <label class="form-control-label mb-2" for="name">Name</label>
+                  <input type="text" name="name" id="name" class="form-control form-control-alternative" placeholder="Enter Role Name" required="" autofocus="">
+                </div><!-- end of form-group -->
+
+                <div class="form-group">
+                  <label class="form-control-label mb-2" for="slug">Slug</label>
+                  <input type="text" name="slug" id="slug" class="form-control form-control-alternative" placeholder="slug" required="">
+                </div><!-- end of form-group -->
+
+
+
+                <div class="form-group">
+                  <label class="form-control-label mb-2" for="description">Description</label>
+                  <textarea name="description" id="description" class="form-control form-control-alternative" required=""></textarea>
+                </div><!-- end of form-group -->
+
+
+                <div class="mb-4">
+                  <button type="submit" class="btn btn-primary mt-4">Add new role</button>
+                </div><!-- end of form-group -->
+              </form><!-- end of form -->
+            </div><!-- end of col6 -->
+          </div><!-- end of card -->
+        </div><!-- end of col -->
+      </div><!-- end of row -->
+    </div><!-- end of container-fluid -->
+  </section>
+@endsection

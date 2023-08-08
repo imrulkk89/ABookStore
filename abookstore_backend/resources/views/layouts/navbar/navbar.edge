@@ -1,0 +1,260 @@
+<aside class="cv_db_aside_area clearfix cv_db_full_height cv_db_scrollbar" id="aside_area">
+
+  <div class="cv_db_logo mb-3">
+    <div class="logoWrapper">
+      <a href="/admin/dashboard"><img src="{{ assetsUrl('logo.png') }}" /></a>
+    </div><!-- end of logoWrapper -->
+  </div><!-- end of db_logo -->
+
+  <div
+    class="cv_db_sidebar_nav navbar navbar-vertical p-0 navbar-expand-xs fixed-left navbar-expand-md navbar-light bg-white clearfix"
+    id="sidebar_nav">
+
+    <ul class="navbar-nav cv_db_sidebar_menu">
+      <li class="nav-item">
+        @if(dashboard)
+        <a class="nav-link active" href="/admin/dashboard">
+          @else
+          <a class="nav-link" href="/admin/dashboard">
+            @endif
+            <i class="fas fa-desktop"></i> Dashboard
+          </a>
+      </li><!-- end of li -->
+
+      <li class="nav-item ">
+        @if(product)
+        <a class="nav-link active" href="#navbar-books" data-toggle="collapse" role="button" aria-expanded="true"
+          aria-controls="navbar-books">
+          @else
+          <a class="nav-link" href="#navbar-books" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="navbar-books">
+            @endif
+            <i class="fas fa-store"></i>
+            <span class="nav-link-text"> Product </span>
+          </a>
+          <div id="navbar-books" class="collapse {{product ? 'show' : ''}}">
+            <ul class="nav cv_db_collapse_nav flex-column">
+
+              <li class="nav-item {{allProducts ? 'active' : ''}}">
+                <a href="/admin/product" class="nav-link ">All Products</a>
+              </li>
+
+              <li class="nav-item {{newProduct? 'active' : ''}}">
+                <a href="/admin/product/create" class="nav-link ">Add New Product</a>
+              </li>
+
+              <li class="nav-item {{category? 'active' : ''}}">
+                <a href="/admin/category" class="nav-link ">Categories</a>
+              </li>
+
+              <li class="nav-item {{ stage_nav ? 'active' : ''}}">
+                <a href="/admin/stage" class="nav-link">Stages</a>
+              </li>
+
+              <li class="nav-item {{filter? 'active' : ''}}">
+                <a href="/admin/all-filter" class="nav-link ">Filter</a>
+              </li>
+            </ul>
+          </div>
+      </li><!-- end of li -->
+
+      <li class="nav-item ">
+        @if(orders_nav)
+        <a class="nav-link active" href="#navbar-agents" data-toggle="collapse" role="button" aria-expanded="false"
+          aria-controls="navbar-agents">
+          @else
+          <a class="nav-link" href="#navbar-agents" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="navbar-agents">
+            @endif
+            <i class="fas fa-shopping-cart"></i>
+            <span class="nav-link-text"> Order </span>
+          </a>
+          <div id="navbar-agents" class="collapse {{orders_nav? 'show' : ''}}">
+            <ul class="nav cv_db_collapse_nav flex-column">
+              <li class="nav-item">
+                <a href="/admin/orders" class="nav-link">All Orders</a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/order-categories/PENDING" class="nav-link">Pending Order</a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/order-categories/APPROVED" class="nav-link">Approved Order</a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/order-categories/DELIVERY" class="nav-link">Delivery Order</a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/order-categories/DELIVERED" class="nav-link">Delivered Order</a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/order-categories/REJECTED" class="nav-link">Rejected Order</a>
+              </li>
+            </ul>
+          </div>
+      </li>
+
+      @if(auth.user.user_type !== 'MAINTAINER')
+      <li class="nav-item ">
+        @if(users_nav)
+        <a class="nav-link active" href="#navbar-user" data-toggle="collapse" role="button" aria-expanded="false"
+          aria-controls="navbar-user">
+          @else
+          <a class="nav-link" href="#navbar-user" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="navbar-user">
+            @endif
+            <i class="fas fa-user-friends"></i>
+            <span class="nav-link-text"> Users </span>
+          </a>
+          <div id="navbar-user" class="collapse {{users_nav ? 'show' : ''}}">
+            <ul class="nav cv_db_collapse_nav flex-column">
+              @if(allUsers_nav)
+              <li class="nav-item active">
+                @else
+              <li class="nav-item">
+                @endif
+                <a href="/admin/all-users" class="nav-link ">All Users</a>
+              </li>
+              @if(auth.user.user_type === 'SUPER_ADMIN')
+              @if(create_user_nav)
+              <li class="nav-item active">
+                @else
+              <li class="nav-item">
+                @endif
+                <a href="/admin/create-user" class="nav-link ">Create User</a>
+              </li>
+              @endif
+            </ul>
+          </div>
+      </li><!-- end of li -->
+      @endif
+
+      <li class="nav-item ">
+        @if(customer_nav)
+        <a class="nav-link active" href="#navbar-customer" data-toggle="collapse" role="button" aria-expanded="false"
+          aria-controls="navbar-customer">
+          @else
+          <a class="nav-link" href="#navbar-customer" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="navbar-customer">
+            @endif
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span class="nav-link-text">Customers</span>
+          </a>
+          <div id="navbar-customer" class="collapse {{customer_nav ? 'show' : ''}}">
+            <ul class="nav cv_db_collapse_nav flex-column">
+              @if(customer_nav)
+              <li class="nav-item active">
+                @else
+              <li class="nav-item">
+                @endif
+                <a href="/admin/customer" class="nav-link ">All Customer</a>
+              </li>
+            </ul>
+          </div>
+      </li><!-- end of li -->
+
+
+
+      <li class="nav-item ">
+        <a class="nav-link {{promo_nav? 'active' : '' }}" href="#navbar-coupon" data-toggle="collapse" role="button"
+          aria-expanded="false" aria-controls="navbar-user">
+
+          <i class="fas fa-money-bill"></i>
+          <span class="nav-link-text"> Promo </span>
+        </a>
+        <div id="navbar-coupon" class="collapse {{promo_nav ? 'show' : ''}}">
+          <ul class="nav cv_db_collapse_nav flex-column">
+            <li class="nav-item {{promos ? 'active' : '' }}">
+              <a href="/admin/promo-code" class="nav-link ">Promo</a>
+            </li>
+            <li class="nav-item {{promo_create ? 'active' : ''}}">
+              <a href="/admin/promo-code/create" class="nav-link ">create</a>
+            </li>
+          </ul>
+        </div>
+      </li><!-- end of li -->
+
+      {{--
+    @loggedIn
+      <li class="nav-item">
+          @if(users_nav)
+            <a class="nav-link active" href="#navbar-user" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-user">
+          @else
+            <a class="nav-link" href="#navbar-user" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-user">
+          @endif
+              <i class="fas fa-user-friends"></i>
+              <span class="nav-link-text">Authorizations</span>
+            </a>
+          <div id="navbar-user" class="collapse {{users_nav ? 'show' : ''}}">
+      <ul class="nav cv_db_collapse_nav flex-column">
+        @if(allUsers_nav)
+        <li class="nav-item active">
+          @else
+        <li class="nav-item">
+          @endif
+          <a href="/admin/all-users" class="nav-link ">All Users</a>
+        </li>
+        @if(create_user_nav)
+        <li class="nav-item active">
+          @else
+        <li class="nav-item">
+          @endif
+          <a href="/admin/create-user" class="nav-link ">Create New User</a>
+        </li>
+        @if(all_roles)
+        <li class="nav-item active">
+          @else
+        <li class="nav-item">
+          @endif
+          <a href="/admin/role" class="nav-link ">All Roles</a>
+        </li>
+        @if(create_role)
+        <li class="nav-item active">
+          @else
+        <li class="nav-item">
+          @endif
+          <a href="/admin/role/create" class="nav-link ">Create New Role</a>
+        </li>
+        @if(all_persmissions)
+        <li class="nav-item active">
+          @else
+        <li class="nav-item">
+          @endif
+          <a href="/admin/permission" class="nav-link ">All Permissions</a>
+        </li>
+        @if(craete_permission)
+        <li class="nav-item active">
+          @else
+        <li class="nav-item">
+          @endif
+          <a href="/admin/permission/create" class="nav-link ">Create New Permission</a>
+        </li>
+      </ul>
+  </div>
+  </li><!-- end of li -->
+  @endloggedIn
+  ---}}
+
+  <li class="nav-item ">
+    <a class="nav-link {{settings? 'active' : ''}}" href="#navbar-settings" data-toggle="collapse" role="button"
+      aria-expanded="false" aria-controls="navbar-settings">
+      <i class="fas fa-user-cog"></i>
+      <span class="nav-link-text"> Settings </span>
+    </a>
+    <div id="navbar-settings" class="collapse {{settings? 'show' : ''}}">
+      <ul class="nav cv_db_collapse_nav flex-column">
+        <li class="nav-item">
+          <a href="#" class="nav-link ">General</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/delivery" class="nav-link {{delivery ? 'active' : ''}}">Estates & Shipment</a>
+        </li>
+
+      </ul>
+    </div>
+  </li><!-- end of li -->
+
+
+  </ul><!-- end of navbar-nav -->
+  </div><!-- end of cv_db_sidebar_nav -->
+
+</aside><!-- end of cv_db_aside_area -->
